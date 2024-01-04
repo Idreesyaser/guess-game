@@ -2,6 +2,7 @@ let gameName = "Guess The World";
 
 document.title = gameName;
 document.querySelector("h1").inertia = gameName;
+let massagearea = document.querySelector(".massage");
 
 document.querySelector(
   "footer"
@@ -17,7 +18,7 @@ let words = [
   "Create",
   "Delete",
   "Branch",
-  "Schoose",
+  "school",
   "Master",
   "Mainer",
   "monster",
@@ -33,7 +34,7 @@ function generateinput() {
     tryDiv.innerHTML = `<span>try${i}</span>`;
     if (i !== 1) tryDiv.classList.add("dosabled-inputs");
 
-    for (let j = 1; j < numberofletters; j++) {
+    for (let j = 1; j <= numberofletters; j++) {
       let input = document.createElement("input");
       input.type = "text";
       input.id = `try-${i}-letter-${j}`;
@@ -76,6 +77,7 @@ function generateinput() {
 let guessbutton = document.querySelector(".check");
 guessbutton.addEventListener("click", handelGeusess);
 
+
 function handelGeusess() {
   let successGuess = true;
   for (let i = 1; i <= numberofletters; i++) {
@@ -85,9 +87,9 @@ function handelGeusess() {
 
     //game logic
 
-    if (letter === actualletter) {
+    if (letter === actualletter && letter != "") {
       inputfield.classList.add("yes-in-place");
-    } else if (wordToGuess.includes(letter)) {
+    } else if (wordToGuess.includes(letter) && letter != "") {
       inputfield.classList.add("not-in-palce");
       successGuess = false;
     } else {
@@ -95,11 +97,43 @@ function handelGeusess() {
       successGuess = false;
     }
   }
+  // check if user win or not
+  if (successGuess) {
+    massagearea.innerHTML = `You Win! The word is <span>${wordToGuess}</span>`;
 
-  
+    let allTries = document.querySelectorAll(".inputs > div");
+    allTries.forEach((trydiv) => {
+      trydiv.classList.add("dosabled-inputs");
+      guessbutton.disabled = true;
+    });
+  } else {
+    document
+      .querySelector(`.try-${currentTry}`)
+      .classList.add("dosabled-inputs");
+    const currentTryInputs = document.querySelectorAll(
+      `.try-${currentTry} input`
+    );
+    currentTryInputs.forEach((input) => {
+      input.disabled = true;
+    });
 
+    currentTry++;
 
-
+    const nextInput = document.querySelectorAll(`.try-${currentTry} input`);
+    nextInput.forEach((input) => {
+      input.disabled = false;
+    });
+    let el = document.querySelector(`.try-${currentTry}`);
+    if (el) {
+      document
+        .querySelector(`.try-${currentTry}`)
+        .classList.remove("dosabled-inputs");
+      el.children[1].focus();
+    } else {
+      guessbutton.disabled = true;
+      massagearea.innerHTML = `You Lose :( The Word Is <span> ${wordToGuess} </span>`;
+    }
+  }
 }
 
 window.onload = function () {
