@@ -56,20 +56,56 @@ h1 {
         }
         &.yes-in-place {
           background-color: #f89e13;
-          border:#f89e13 ;
+          border: #f89e13;
           color: white;
         }
         &.not-in-palce {
           background-color: #18ba89;
           border: #18ba89;
-          color : white;
+          color: white;
         }
         &.no {
           background-color: #27303f;
           border: #27303f;
-          color : white;
+          color: white;
         }
       }
+    }
+  }
+  .control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    margin: 30px auto;
+    gap: 10px;
+
+    .check {
+      border: none;
+      font-size: 25px;
+      padding: 15px 20px;
+      border-radius: 6px;
+      background-color: var(--primary-color);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      flex: 1;
+    }
+    .hint {
+      border: none;
+      font-size: 25px;
+      padding: 15px 20px;
+      border-radius: 6px;
+      background-color: #009688;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      width: fit-content;
+    }
+    button:disabled {
+      background-color: black;
+      opacity: 0.4;
+      cursor: no-drop;
     }
   }
   .key-colors {
